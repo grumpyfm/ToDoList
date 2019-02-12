@@ -1,33 +1,51 @@
 .App {
-  text-align: center;
+    text-align: center;
+    background-image: url("https://b.kisscc0.com/20180517/jje/kisscc0-scottish-highlands-flag-of-scotland-blog-desktop-w-nature-5afd643e2dacf4.7030319515265557101871.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 41em;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.clockBlock {
+    font-size: 9em;
+    font-weight: bold;
+    padding-top: 1em;
+    color: aliceblue;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.focusBlock {
+    padding-top: 4em;
 }
 
-.App-link {
-  color: #61dafb;
+.focusToday {
+    color: aliceblue;
+    font-size: 1em;
+    padding-top: 5%;
+    margin-bottom: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.focusQuestion, .focusMain {
+    color: aliceblue;
+    font-size: 1.5em;
+}
+
+.sayHelloBlock {
+    font-size: 3em;
+    color: aliceblue;
+}
+
+.form-input {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-bottom: #cccccc solid 2px;
+    border-radius: 7px;
+    width: 30%;
+    color: #cccccc;
+}
+
+.start {
+    padding-top: 13em;
+}
+
+.form-input[value] {
+    color: gainsboro;
 }

@@ -1,28 +1,53 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Time from './components/clock';
+import MainFocus from './components/mainFocus';
+import Greeting from "./components/greeting";
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    constructor() {
+        super();
+        this.state = {
+            name: '',
+            focus: ''
+        };
+        this.handleName = this.handleName.bind(this);
+        this.handleFocus = this.handleFocus.bind(this);
+    }
+
+    render() {
+        return this.toDo();
+    }
+
+    toDo() {
+        if (this.state.name === '') {
+            return (
+                <div className="App container-fluid start">
+                    <Greeting name={this.state.name}
+                              handleName={this.handleName}/>
+                </div>
+            )
+        } else {
+            return (
+                <div className="App container-fluid">
+                    <Time/>
+                    <Greeting name={this.state.name}
+                              handleName={this.handleName}/>
+                    <MainFocus focus={this.state.focus}
+                               handleFocus={this.handleFocus}/>
+                </div>
+            )
+        }
+    }
+
+    handleName(data) {
+        this.setState({name: data});
+    }
+
+    handleFocus(data) {
+        this.setState({focus: data});
+    }
+
 }
 
 export default App;
