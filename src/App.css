@@ -46,6 +46,30 @@
     padding-top: 13em;
 }
 
-.form-input[value] {
-    color: gainsboro;
+#listWindow {
+    z-index: unset;
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+
+}
+
+.todoButton {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+#root {
+    position: relative;
+}
+
+.form-todo {
+    width: 10em;
+    color: black;
+}
+.toDoList{
+    max-height: 20em;
+    overflow: auto;
+
 }

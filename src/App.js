@@ -3,23 +3,27 @@ import './App.css';
 import Time from './components/clock';
 import MainFocus from './components/mainFocus';
 import Greeting from "./components/greeting";
+import ToDoList from './components/toDoList';
 
 class App extends Component {
     constructor() {
         super();
         this.state = {
-            name: '',
-            focus: ''
+            name: 'Luydmila',
+            focus: 'To do!',
+            toDos: ['todo1', 'todo2','todo3','todo4'],
+            item:'',
         };
         this.handleName = this.handleName.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
+        this.handleChangeToDoList = this.handleChangeToDoList.bind(this);
     }
 
     render() {
-        return this.toDo();
+        return this.listWindowInner();
     }
 
-    toDo() {
+    listWindowInner() {
         if (this.state.name === '') {
             return (
                 <div className="App container-fluid start">
@@ -35,6 +39,10 @@ class App extends Component {
                               handleName={this.handleName}/>
                     <MainFocus focus={this.state.focus}
                                handleFocus={this.handleFocus}/>
+                    <ToDoList toDos={this.state.toDos}
+                              handleChangeToDoList={this.handleChangeToDoList}
+                              />
+                    />
                 </div>
             )
         }
@@ -46,6 +54,10 @@ class App extends Component {
 
     handleFocus(data) {
         this.setState({focus: data});
+    }
+
+    handleChangeToDoList(data) {
+        this.setState({toDos: data});
     }
 
 }
