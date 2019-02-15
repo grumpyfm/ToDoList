@@ -32,12 +32,17 @@ class MainFocus extends Component {
         });
     }
 
+    handleUpdateFocus(value) {
+        this.props.handleFocus(this.state.inputFocus);
+        this.setState({inputFocus:value});
+    }
+
     showMainFocus() {
         if (this.props.focus !== '') {
             return (
                 <div className={'focusBlock'}>
                     <p className={'focusToday'}> Today </p>
-                    <h2 onClick={() => this.props.handleFocus(this.state.inputFocus)}
+                    <h2 onClick={() => this.handleUpdateFocus(this.props.focus)}
                         className={'focusMain'}>{this.props.focus}</h2>
                 </div>
             )
