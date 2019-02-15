@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 
 class MainFocus extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
-
         this.state = {
             inputFocus: ''
         };
@@ -14,11 +13,10 @@ class MainFocus extends Component {
     render() {
         return (
             <div>
-                {this.showUserName()}
+                {this.showMainFocus()}
             </div>
         )
     }
-
 
     submitHandler(evt) {
         evt.preventDefault();
@@ -34,12 +32,13 @@ class MainFocus extends Component {
         });
     }
 
-    showUserName() {
+    showMainFocus() {
         if (this.props.focus !== '') {
             return (
-                <div>
-                    <p className={'focusToday'}> Today</p>
-                    <h2 className={'focusMain'}> {this.props.focus}</h2>
+                <div className={'focusBlock'}>
+                    <p className={'focusToday'}> Today </p>
+                    <h2 onClick={() => this.props.handleFocus(this.state.inputFocus)}
+                        className={'focusMain'}>{this.props.focus}</h2>
                 </div>
             )
         } else {

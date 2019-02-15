@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import ToDoItem from './toDoItem';
 
 
-class ListWindow extends Component {
+class ToDoList extends Component {
     constructor() {
         super();
 
@@ -15,6 +15,7 @@ class ListWindow extends Component {
             show: false,
         };
     }
+
     handleClose() {
         this.setState({show: false});
     }
@@ -27,7 +28,6 @@ class ListWindow extends Component {
         return (
             <div>
                 <Button variant="primary" className={'todoButton'} onClick={this.handleShow}>ToDo</Button>
-
                 <Modal id="listWindow" show={this.state.show} onHide={this.handleClose}>
                     <Modal.Header closeButton>
                         <Modal.Title>{this.props.toDos.length} To Do</Modal.Title>
@@ -35,8 +35,7 @@ class ListWindow extends Component {
                     <Modal.Body>
                         <div>
                             <ToDoItem toDos={this.props.toDos}
-                                      handleChangeToDoList={this.props.handleChangeToDoList}
-                                      />
+                                      handleChangeToDoList={this.props.handleChangeToDoList}/>
                         </div>
                     </Modal.Body>
                 </Modal>
@@ -46,4 +45,4 @@ class ListWindow extends Component {
 
 }
 
-export default ListWindow;
+export default ToDoList;

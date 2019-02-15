@@ -9,10 +9,10 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            name: 'Luydmila',
-            focus: 'To do!',
-            toDos: ['todo1', 'todo2','todo3','todo4'],
-            item:'',
+            name: '',
+            focus: '',
+            toDos: [],
+            item: '',
         };
         this.handleName = this.handleName.bind(this);
         this.handleFocus = this.handleFocus.bind(this);
@@ -26,7 +26,7 @@ class App extends Component {
     listWindowInner() {
         if (this.state.name === '') {
             return (
-                <div className="App container-fluid start">
+                <div className="App container-fluid beginningPage">
                     <Greeting name={this.state.name}
                               handleName={this.handleName}/>
                 </div>
@@ -41,7 +41,6 @@ class App extends Component {
                                handleFocus={this.handleFocus}/>
                     <ToDoList toDos={this.state.toDos}
                               handleChangeToDoList={this.handleChangeToDoList}
-                              />
                     />
                 </div>
             )

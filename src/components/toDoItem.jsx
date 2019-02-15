@@ -20,6 +20,7 @@ class ToDoItem extends Component {
                 <div className="toDoList"></div>
                 <form onSubmit={this.submitHandler}>
                     <input type="text"
+                           placeholder={'Type your to-do here'}
                            className={"form-input form-todo"}
                            value={this.state.item}
                            onChange={this.handleChange}/>
@@ -31,11 +32,15 @@ class ToDoItem extends Component {
     componentDidMount() {
         let div = document.querySelector('.toDoList');
         div.onclick = (event) => this.handleClick(event);
-        this.checkIfTodo();
+        this.checkIfToDos();
     }
 
     createToDoItem(i) {
+        let messageContainer = document.querySelector('.messageContainer');
         let div = document.querySelector('.toDoList');
+        if (messageContainer) {
+            div.removeChild(messageContainer);
+        }
         for (i; i < this.props.toDos.length; i++) {
             let container = document.createElement('div');
             container.className = 'form-check';
@@ -77,28 +82,31 @@ class ToDoItem extends Component {
     submitHandler(evt) {
         evt.preventDefault();
         if (this.state.item !== '') {
-            let res = this.state.toDos;
-            if (this.state.toReplace !== '') {
-                res[this.state.toReplace] = this.state.item;
-            } else {
-                res.push(this.state.item);
-            }
-            this.setState({
-                toDos: res
-            });
-            this.props.handleChangeToDoList(this.state.toDos);
-            this.setState({
-                item: ''
-            });
-            if (this.state.toReplace !== '') {
-                let div = document.querySelector('.toDoList');
-                div.innerHTML = '';
+            let repeat = this.state.toDos.filter((item) => item === this.state.item);
+            if (repeat.length === 0) {
+                let res = this.state.toDos;
+                if (this.state.toReplace !== '') {
+                    res[this.state.toReplace] = this.state.item;
+                } else {
+                    res.push(this.state.item);
+                }
                 this.setState({
-                    toReplace: ''
+                    toDos: res
                 });
-                this.createToDoItem(0);
-            } else {
-                this.createToDoItem(this.state.toDos.length - 1);
+                this.props.handleChangeToDoList(this.state.toDos);
+                this.setState({
+                    item: ''
+                });
+                if (this.state.toReplace !== '') {
+                    let div = document.querySelector('.toDoList');
+                    div.innerHTML = '';
+                    this.setState({
+                        toReplace: ''
+                    });
+                    this.createToDoItem(0);
+                } else {
+                    this.createToDoItem(this.state.toDos.length - 1);
+                }
             }
         }
     }
@@ -109,10 +117,13 @@ class ToDoItem extends Component {
         });
     }
 
-    checkIfTodo() {
+    checkIfToDos() {
         if (this.props.toDos.length === 0) {
             let container = document.querySelector('.toDoList');
-            container.innerHTML = 'There is no toDos yet. Add new to get started!'
+            let messageContainer = document.createElement('p');
+            messageContainer.innerHTML = 'There is nothing to do yet';
+            messageContainer.className = 'messageContainer';
+            container.appendChild(messageContainer);
         } else {
             if (this.props.toDos.length !== 0) {
                 this.createToDoItem(0);
@@ -130,7 +141,6 @@ class ToDoItem extends Component {
         });
         this.props.handleChangeToDoList(this.state.toDos);
         let targetClosest = target.closest('div');
-
         targetClosest.parentNode.removeChild(targetClosest);
     }
 
@@ -140,6 +150,7 @@ class ToDoItem extends Component {
         let form = document.querySelector('.form-todo');
         this.setState({toReplace: index});
         form.value = target.value;
+        form.focus();
     }
 }
 

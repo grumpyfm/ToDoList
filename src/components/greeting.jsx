@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 
 class Greeting extends Component {
-    constructor() {
+    constructor(props) {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
 
         this.state = {
             inputName: '',
-        };
+        }
     }
 
     render() {
@@ -39,13 +39,15 @@ class Greeting extends Component {
         } else {
             return (
                 <div>
-                <form onSubmit={this.submitHandler}>
-                    <input type="text"
-                           placeholder={'Enter your first name please'}
-                           className={"form-input"}
-                           value={this.state.inputName}
-                           onChange={this.handleChange}/>
-                </form>
+                    <h3>Enter your first name please</h3>
+                    <form onSubmit={this.submitHandler}>
+                        <input type="text"
+
+                               maxLength={30}
+                               className={"form-input"}
+                               value={this.state.inputName}
+                               onChange={this.handleChange}/>
+                    </form>
                 </div>
             )
         }
@@ -54,13 +56,13 @@ class Greeting extends Component {
     checkDayTime() {
         let time = Number((new Date()).getHours());
         let dayTime;
-        if ( time>5 && time < 13) {
+        if (time > 5 && time < 13) {
             dayTime = 'morning'
-        } else if (time>=13 && time < 18) {
+        } else if (time >= 13 && time < 18) {
             dayTime = 'afternoon'
-        } else if (time>=18 && time < 21) {
+        } else if (time >= 18 && time < 21) {
             dayTime = 'evening'
-        }else {
+        } else {
             dayTime = 'night'
         }
         return dayTime;

@@ -5,6 +5,16 @@
     background-size: cover;
     min-height: 41em;
 }
+.beginningPage {
+    padding-top: 20em;
+}
+.beginningPage h3{
+    color: aliceblue;
+}
+.sayHelloBlock {
+    font-size: 3em;
+    color: aliceblue;
+}
 
 .clockBlock {
     font-size: 9em;
@@ -25,13 +35,9 @@
 }
 
 .focusQuestion, .focusMain {
+    word-wrap: break-word;
     color: aliceblue;
     font-size: 1.5em;
-}
-
-.sayHelloBlock {
-    font-size: 3em;
-    color: aliceblue;
 }
 
 .form-input {
@@ -39,19 +45,8 @@
     border-bottom: #cccccc solid 2px;
     border-radius: 7px;
     width: 30%;
+    text-align: center;
     color: #cccccc;
-}
-
-.start {
-    padding-top: 13em;
-}
-
-#listWindow {
-    z-index: unset;
-    position: absolute;
-    right: 10px;
-    bottom: 15px;
-
 }
 
 .todoButton {
@@ -60,16 +55,19 @@
     bottom: 10px;
 }
 
-#root {
-    position: relative;
+#listWindow {
+    z-index: unset;
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
 }
 
 .form-todo {
     width: 10em;
     color: black;
 }
+
 .toDoList{
     max-height: 20em;
     overflow: auto;
-
 }
