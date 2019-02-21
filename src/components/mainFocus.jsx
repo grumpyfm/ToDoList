@@ -11,33 +11,6 @@ class MainFocus extends Component {
     }
 
     render() {
-        return (
-            <div>
-                {this.showMainFocus()}
-            </div>
-        )
-    }
-
-    submitHandler(evt) {
-        evt.preventDefault();
-        this.props.handleFocus(this.state.inputFocus);
-        this.setState({
-            inputFocus: ''
-        });
-    }
-
-    handleChange(event) {
-        this.setState({
-            inputFocus: event.target.value
-        });
-    }
-
-    handleUpdateFocus(value) {
-        this.props.handleFocus(this.state.inputFocus);
-        this.setState({inputFocus:value});
-    }
-
-    showMainFocus() {
         if (this.props.focus !== '') {
             return (
                 <div className={'focusBlock'}>
@@ -59,6 +32,25 @@ class MainFocus extends Component {
                 </div>
             )
         }
+    }
+
+    submitHandler(evt) {
+        evt.preventDefault();
+        this.props.handleStateChange('focus', this.state.inputFocus);
+        this.setState({
+            inputFocus: ''
+        });
+    }
+
+    handleChange(event) {
+        this.setState({
+            inputFocus: event.target.value
+        });
+    }
+
+    handleUpdateFocus(value) {
+        this.props.handleStateChange('focus', this.state.inputFocus);
+        this.setState({inputFocus: value});
     }
 }
 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
-import Time from './components/clock';
+import Time from './components/time';
 import MainFocus from './components/mainFocus';
 import Greeting from "./components/greeting";
 import ToDoList from './components/toDoList';
@@ -9,55 +9,46 @@ class App extends Component {
     constructor() {
         super();
         this.state = {
-            name: '',
-            focus: '',
-            toDos: [],
-            item: '',
+            userInfo: {
+                name: '',
+                focus: '',
+                toDos: [],
+                item: '',
+            }
         };
-        this.handleName = this.handleName.bind(this);
-        this.handleFocus = this.handleFocus.bind(this);
-        this.handleChangeToDoList = this.handleChangeToDoList.bind(this);
+        this.handleStateChange = this.handleStateChange.bind(this);
     }
 
     render() {
-        return this.listWindowInner();
-    }
-
-    listWindowInner() {
-        if (this.state.name === '') {
+        if (this.state.userInfo.name === '') {
             return (
                 <div className="App container-fluid beginningPage">
-                    <Greeting name={this.state.name}
-                              handleName={this.handleName}/>
+                    <Greeting name={this.state.userInfo.name}
+                              handleStateChange={this.handleStateChange}/>
                 </div>
             )
         } else {
             return (
                 <div className="App container-fluid">
                     <Time/>
-                    <Greeting name={this.state.name}
-                              handleName={this.handleName}/>
-                    <MainFocus focus={this.state.focus}
-                               handleFocus={this.handleFocus}/>
-                    <ToDoList toDos={this.state.toDos}
-                              handleChangeToDoList={this.handleChangeToDoList}
+                    <Greeting name={this.state.userInfo.name}
+                              handleStateChange={this.handleStateChange}/>
+                    <MainFocus focus={this.state.userInfo.focus}
+                               handleStateChange={this.handleStateChange}/>
+                    <ToDoList toDos={this.state.userInfo.toDos}
+                              handleStateChange={this.handleStateChange}
                     />
                 </div>
             )
         }
     }
 
-    handleName(data) {
-        this.setState({name: data});
+    handleStateChange(valueToUpdate, data) {
+        this.setState({
+            userInfo: {...this.state.userInfo, [valueToUpdate]: data}
+        })
     }
 
-    handleFocus(data) {
-        this.setState({focus: data});
-    }
-
-    handleChangeToDoList(data) {
-        this.setState({toDos: data});
-    }
 
 }
 

@@ -21,12 +21,32 @@ class ToDoItem extends Component {
                 <form onSubmit={this.submitHandler}>
                     <input type="text"
                            placeholder={'Type your to-do here'}
-                           className={"form-input form-todo"}
+                           className={"form-input form-todo invisible"}
                            value={this.state.item}
                            onChange={this.handleChange}/>
                 </form>
+                <button onClick={this.handleToDoButton} type={'button'}
+                        className={'btn newToDoItem'}>+ Add new
+                </button>
             </div>
         )
+    }
+
+    handleToDoButton() {
+
+        let button = document.querySelector('.newToDoItem');
+        let form = document.querySelector('.form-todo');
+        console.log(button.className);
+        if (button.className === 'invisible') {
+            button.classList.remove('invisible');
+            form.className = 'invisible'
+        } else {
+            button.className = 'invisible';
+            form.classList.remove('invisible');
+            form.focus()
+        }
+
+
     }
 
     componentDidMount() {
@@ -47,11 +67,11 @@ class ToDoItem extends Component {
             let input = document.createElement('input');
             input.className = 'form-check-input';
             input.type = 'checkbox';
-            input.setAttribute('data-action', 'delete');
+            input.setAttribute('data-action', 'resolve');
             input.value = this.props.toDos[i];
 
             let label = document.createElement('label');
-            label.className = 'form-check-label';
+            label.className = 'form-check-label form-label';
             label.for = this.props.toDos[i];
             label.setAttribute('data-action', 'update');
             label.value = this.props.toDos[i];
@@ -60,6 +80,7 @@ class ToDoItem extends Component {
             container.appendChild(input);
             container.appendChild(label);
         }
+
     }
 
     handleClick(e) {
@@ -67,8 +88,8 @@ class ToDoItem extends Component {
         let action = target.getAttribute('data-action');
         if (action) {
             switch (action) {
-                case'delete':
-                    this.handleDeleteItem(e);
+                case'resolve':
+                    this.handleResolveItem(e);
                     break;
                 case 'update':
                     this.handleUpdateItem(e);
@@ -93,7 +114,7 @@ class ToDoItem extends Component {
                 this.setState({
                     toDos: res
                 });
-                this.props.handleChangeToDoList(this.state.toDos);
+                this.props.handleStateChange('toDos', this.state.toDos);
                 this.setState({
                     item: ''
                 });
@@ -131,17 +152,14 @@ class ToDoItem extends Component {
         }
     }
 
-    handleDeleteItem(e) {
+    handleResolveItem(e) {
         let target = e.target;
-        let index = this.state.toDos.indexOf(target.value);
-        let res = this.state.toDos;
-        res.splice(index, 1);
-        this.setState({
-            toDos: res
-        });
-        this.props.handleChangeToDoList(this.state.toDos);
         let targetClosest = target.closest('div');
-        targetClosest.parentNode.removeChild(targetClosest);
+        if (targetClosest.className === 'form-check checked') {
+            targetClosest.className='form-check';
+        } else {
+            targetClosest.className = 'form-check checked';
+        }
     }
 
     handleUpdateItem(e) {
