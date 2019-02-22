@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Button from 'react-bootstrap/Button';
 import ToDoItem from './toDoItem';
 
 
@@ -10,13 +9,15 @@ class ToDoList extends Component {
 
     render() {
         return (
-                <div id="listWindow">
-                        <h3>{this.props.toDos.length} To Do<hr/></h3>
-                        <div>
-                            <ToDoItem toDos={this.props.toDos}
-                                      handleStateChange={this.props.handleStateChange}/>
-                        </div>
+            <div id='listWindow'>
+                <h3>{this.props.toDos.length} To Do
+                    <hr/>
+                </h3>
+                <div>
+                    <ToDoItem toDos={this.props.toDos}
+                              handleStateChange={this.props.handleStateChange}/>
                 </div>
+            </div>
         );
     }
 

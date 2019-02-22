@@ -1,6 +1,7 @@
-#root{
+#root {
     position: relative;
 }
+
 .App {
     text-align: center;
     background-image: url("https://b.kisscc0.com/20180517/jje/kisscc0-scottish-highlands-flag-of-scotland-blog-desktop-w-nature-5afd643e2dacf4.7030319515265557101871.jpg");
@@ -8,12 +9,15 @@
     background-size: cover;
     min-height: 41em;
 }
+
 .beginningPage {
     padding-top: 20em;
 }
-.beginningPage h3{
+
+.beginningPage h3 {
     color: aliceblue;
 }
+
 .sayHelloBlock {
     font-size: 3em;
     color: aliceblue;
@@ -29,7 +33,9 @@
 .focusBlock {
     padding-top: 4em;
 }
-
+.messageContainer{
+    text-align: center;
+}
 .focusToday {
     color: aliceblue;
     font-size: 1em;
@@ -52,15 +58,24 @@
     color: #cccccc;
 }
 
-.todoButton {
+.newItemBlock {
+    min-height: 3em;
+    position: relative;
+}
+
+.newToDoItem {
     position: absolute;
-    right: 10px;
+    width: 90%;
+    left: 5%;
     bottom: 10px;
 }
 
 #listWindow {
+    min-width: 13em;
+    max-width: 15em;
+    word-wrap: break-word;
     border-radius: 7px;
-    background-color:aliceblue ;
+    background-color: aliceblue;
     z-index: unset;
     position: absolute;
     right: 10px;
@@ -68,30 +83,42 @@
 }
 
 .form-todo {
-    width: 10em;
+    position: absolute;
+    bottom: 10px;
+    width: 90%;
+    left: 5%;
     color: black;
 }
 
-.newToDoItem{
+.newToDoItem {
     background-color: #cfd1d4;
 }
-.invisible{
+
+.invisible {
     visibility: hidden;
 }
-.toDoList{
+
+.toDoList {
     width: 100%;
     text-align: left;
     max-height: 20em;
     overflow: auto;
 }
-.checkBoxContainer{
-    position: relative;
-    padding-left:5px;
 
+.checkBoxContainer {
+    position: relative;
+    padding-left: 5px;
 }
-label{
+
+label {
+    word-wrap: break-word;
     padding-left: 10px;
 }
-.checked label{
-    text-decoration:line-through
+
+.checked {
+    text-decoration: line-through
+}
+
+.checkBox {
+    margin-left: -10px;
 }
