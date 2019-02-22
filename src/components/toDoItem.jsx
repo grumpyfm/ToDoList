@@ -17,99 +17,71 @@ class ToDoItem extends Component {
     render() {
         return (
             <div>
-                <div className="toDoList"></div>
-                <form onSubmit={this.submitHandler}>
-                    <input type="text"
-                           placeholder={'Type your to-do here'}
-                           className={"form-input form-todo invisible"}
-                           value={this.state.item}
-                           onChange={this.handleChange}/>
-                </form>
-                <button onClick={this.handleToDoButton} type={'button'}
-                        className={'btn newToDoItem'}>+ Add new
-                </button>
+                <div className='toDoList'>
+                    {this.createToDoItem()}
+                </div>
+                <div className='newItemBlock'>
+                    <button onClick={this.formVisible} type={'button'}
+                            className='btn newToDoItem'>+ Add new
+                    </button>
+                    <form onSubmit={this.submitHandler}>
+                        <input type='text'
+                               placeholder={'Type your to-do here'}
+                               className='form-input form-todo invisible'
+                               onChange={this.handleChange}
+                               onBlur={() => this.buttonVisible()}/>
+                    </form>
+                </div>
             </div>
         )
     }
 
-    handleToDoButton() {
 
+    formVisible() {
         let button = document.querySelector('.newToDoItem');
         let form = document.querySelector('.form-todo');
-        console.log(button.className);
-        if (button.className === 'invisible') {
-            button.classList.remove('invisible');
-            form.className = 'invisible'
-        } else {
-            button.className = 'invisible';
-            form.classList.remove('invisible');
-            form.focus()
-        }
-
-
+        form.className = 'form-input form-todo';
+        form.focus();
+        button.className = 'btn newToDoItem invisible';
     }
 
-    componentDidMount() {
-        let div = document.querySelector('.toDoList');
-        div.onclick = (event) => this.handleClick(event);
-        this.checkIfToDos();
+    buttonVisible() {
+        let button = document.querySelector('.newToDoItem');
+        let form = document.querySelector('.form-todo');
+        form.className = 'form-input form-todo invisible';
+        form.value = '';
+        button.className = 'btn newToDoItem ';
+        if (this.state.toReplace !== '') {
+            this.setState({toReplace: ''});
+        }
     }
 
-    createToDoItem(i) {
-        let messageContainer = document.querySelector('.messageContainer');
-        let div = document.querySelector('.toDoList');
-        if (messageContainer) {
-            div.removeChild(messageContainer);
-        }
-        for (i; i < this.props.toDos.length; i++) {
-            let container = document.createElement('div');
-            container.className = 'form-check';
-            let input = document.createElement('input');
-            input.className = 'form-check-input';
-            input.type = 'checkbox';
-            input.setAttribute('data-action', 'resolve');
-            input.value = this.props.toDos[i];
+    createToDoItem() {
+        return (this.props.toDos.length !== 0 ? (
+            this.props.toDos.map((el, index) =>
+                <div className='form-check' key={index}>
+                    <input type='checkbox' className='form-check-input checkBox' checked={!!el.checked}
+                           value={el.value} onChange={(e) => this.handleResolveItem(e)}/>
+                    <label
+                        className={el.checked ? ('form-check-label form-label checked') : ('form-check-label form-label')}
+                        data-value={el.value} data-action={el.checked ? '' : 'update'} htmlFor={el.value}
+                        onClick={(e) => this.handleUpdateItem(e)}>{el.value}</label>
 
-            let label = document.createElement('label');
-            label.className = 'form-check-label form-label';
-            label.for = this.props.toDos[i];
-            label.setAttribute('data-action', 'update');
-            label.value = this.props.toDos[i];
-            label.innerText = this.props.toDos[i];
-            div.appendChild(container);
-            container.appendChild(input);
-            container.appendChild(label);
-        }
-
-    }
-
-    handleClick(e) {
-        let target = e.target;
-        let action = target.getAttribute('data-action');
-        if (action) {
-            switch (action) {
-                case'resolve':
-                    this.handleResolveItem(e);
-                    break;
-                case 'update':
-                    this.handleUpdateItem(e);
-                    break;
-                default:
-                    break;
-            }
-        }
+                </div>
+            )) : (<div className='messageContainer'>There is nothing to do yet</div>
+        ))
     }
 
     submitHandler(evt) {
         evt.preventDefault();
         if (this.state.item !== '') {
-            let repeat = this.state.toDos.filter((item) => item === this.state.item);
-            if (repeat.length === 0) {
+            let exist = this.state.toDos.filter((el) => el.value === this.state.item);
+            if (exist.length === 0) {
                 let res = this.state.toDos;
                 if (this.state.toReplace !== '') {
-                    res[this.state.toReplace] = this.state.item;
+                    res[this.state.toReplace].value = this.state.item;
                 } else {
-                    res.push(this.state.item);
+                    res.push({value: this.state.item, checked: false});
                 }
                 this.setState({
                     toDos: res
@@ -118,18 +90,12 @@ class ToDoItem extends Component {
                 this.setState({
                     item: ''
                 });
-                if (this.state.toReplace !== '') {
-                    let div = document.querySelector('.toDoList');
-                    div.innerHTML = '';
-                    this.setState({
-                        toReplace: ''
-                    });
-                    this.createToDoItem(0);
-                } else {
-                    this.createToDoItem(this.state.toDos.length - 1);
-                }
+                this.setState({
+                    toReplace: ''
+                })
             }
         }
+        this.buttonVisible();
     }
 
     handleChange(event) {
@@ -138,37 +104,41 @@ class ToDoItem extends Component {
         });
     }
 
-    checkIfToDos() {
-        if (this.props.toDos.length === 0) {
-            let container = document.querySelector('.toDoList');
-            let messageContainer = document.createElement('p');
-            messageContainer.innerHTML = 'There is nothing to do yet';
-            messageContainer.className = 'messageContainer';
-            container.appendChild(messageContainer);
-        } else {
-            if (this.props.toDos.length !== 0) {
-                this.createToDoItem(0);
-            }
-        }
-    }
-
     handleResolveItem(e) {
         let target = e.target;
         let targetClosest = target.closest('div');
-        if (targetClosest.className === 'form-check checked') {
-            targetClosest.className='form-check';
+        let res = this.state.toDos;
+        let label = targetClosest.querySelector('.form-label');
+        let index = this.state.toDos.map((item) => item.value).indexOf(target.value);
+
+        this.props.handleStateChange('toDos', this.state.toDos);
+        if (label.className === 'form-check-label form-label') {
+            res[index] = {value: this.state.toDos[index].value, checked: true};
+            label.className = 'form-check-label form-label checked';
+            label.removeAttribute('data-action', 'update');
         } else {
-            targetClosest.className = 'form-check checked';
+            res[index] = {value: this.state.toDos[index].value, checked: false};
+            label.className = 'form-check-label form-label';
+            label.setAttribute('data-action', 'update');
         }
+        this.setState({
+            toDos: res
+        });
     }
 
     handleUpdateItem(e) {
         let target = e.target;
-        let index = this.state.toDos.indexOf(target.value);
-        let form = document.querySelector('.form-todo');
-        this.setState({toReplace: index});
-        form.value = target.value;
-        form.focus();
+        let value = target.getAttribute('data-value');
+        let attribute = target.getAttribute('data-action');
+        if (attribute !== '') {
+            this.formVisible();
+            let index = this.state.toDos.map((item) => item.value).indexOf(value);
+            let form = document.querySelector('.form-todo');
+            this.setState({toReplace: index});
+            form.value = value;
+        } else {
+            this.buttonVisible();
+        }
     }
 }
 

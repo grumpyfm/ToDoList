@@ -5,28 +5,24 @@ class Greeting extends Component {
         super();
         this.handleChange = this.handleChange.bind(this);
         this.submitHandler = this.submitHandler.bind(this);
-
         this.state = {
             inputName: '',
         }
     }
 
     render() {
-        if (this.props.name !== '') {
-            return <h2 className={'sayHelloBlock'}> Good {this.checkDayTime()}, {this.props.name}</h2>
-        } else {
-            return(
-            <div>
+        return (this.props.name !== '' ?
+            (<h2 className='sayHelloBlock'> Good {this.checkDayTime()}, {this.props.name}</h2>) :
+            (<div>
                 <h3>Enter your first name please</h3>
                 <form onSubmit={this.submitHandler}>
-                    <input type="text"
+                    <input type='text'
                            maxLength={30}
-                           className={"form-input"}
+                           className='form-input'
                            value={this.state.inputName}
                            onChange={this.handleChange}/>
                 </form>
-            </div>)
-        }
+            </div>))
     }
 
     submitHandler(evt) {

@@ -11,27 +11,22 @@ class MainFocus extends Component {
     }
 
     render() {
-        if (this.props.focus !== '') {
-            return (
-                <div className={'focusBlock'}>
-                    <p className={'focusToday'}> Today </p>
-                    <h2 onClick={() => this.handleUpdateFocus(this.props.focus)}
-                        className={'focusMain'}>{this.props.focus}</h2>
-                </div>
-            )
-        } else {
-            return (
-                <div className={'focusBlock'}>
-                    <p className={'focusQuestion'}>What is your main focus for today?</p>
+        return (this.props.focus !== '' ?
+            (<div className='focusBlock'>
+                <p className='focusToday'> Today </p>
+                <h2 onClick={() => this.handleUpdateFocus(this.props.focus)}
+                    className='focusMain'>{this.props.focus}</h2>
+            </div>) :
+            (<div className='focusBlock'>
+                    <p className='focusQuestion'>What is your main focus for today?</p>
                     <form onSubmit={this.submitHandler}>
-                        <input type="text"
-                               className={"form-input"}
+                        <input type='text'
+                               className='form-input'
                                value={this.state.inputFocus}
                                onChange={this.handleChange}/>
                     </form>
                 </div>
-            )
-        }
+            ))
     }
 
     submitHandler(evt) {
